@@ -3,8 +3,17 @@ const controller = express.Router();
 const studentData = require("../studentData.json");
 
 controller.get("/", (request, response) => {
+  // how to handle query string
+  // how to change student data accodingly
+  let { limit = 25 } = request.query;
+  limit = Number(limit);
+  let studentDataForDelivery = { ...studentData };
+  studentDataForDelivery.students = studentDataForDelivery.students.slice(
+    0,
+    limit
+  );
   console.log("GET to students");
-  response.json(studentData);
+  response.json(studentDataForDelivery);
 });
 
 controller.get("/:id", (request, response) => {
